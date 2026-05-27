@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:black;
+overflow-x:hidden;
+font-family:'Poppins',sans-serif;
+color:white;
+}
+
+/* HACK SCREEN */
+
+#hackScreen{
+position:fixed;
+width:100%;
+height:100vh;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:9999;
+color:#00ff66;
+animation:hideHack 6s forwards;
+}
+
+#hackScreen h1{
+font-size:3rem;
+animation:glitch 0.2s infinite;
+}
+
+#hackScreen p{
+margin-top:20px;
+letter-spacing:4px;
+}
+
+@keyframes glitch{
+0%{transform:translate(2px,2px);}
+25%{transform:translate(-2px,-2px);}
+50%{transform:translate(2px,-2px);}
+75%{transform:translate(-2px,2px);}
+100%{transform:translate(2px,2px);}
+}
+
+@keyframes hideHack{
+0%,90%{
+opacity:1;
+visibility:visible;
+}
+100%{
+opacity:0;
+visibility:hidden;
+}
+}
+
+/* QUIZ */
+
+#quizSection{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#000000,#240012,#45001f);
+padding:20px;
+}
+
+.quiz-box{
+width:90%;
+max-width:600px;
+background:rgba(255,255,255,0.08);
+padding:40px;
+border-radius:30px;
+text-align:center;
+backdrop-filter:blur(10px);
+box-shadow:0 0 40px rgba(255,0,100,0.4);
+}
+
+.quiz-box h1{
+font-size:2rem;
+color:#ff5ca8;
+margin-bottom:20px;
+}
+
+.quiz-box input{
+width:100%;
+padding:15px;
+border:none;
+outline:none;
+border-radius:15px;
+text-align:center;
+font-size:1rem;
+margin-top:20px;
+}
+
+.quiz-box button{
+margin-top:20px;
+padding:15px 35px;
+border:none;
+border-radius:15px;
+background:#ff2f72;
+color:white;
+font-size:1rem;
+cursor:pointer;
+transition:0.3s;
+}
+
+.quiz-box button:hover{
+transform:scale(1.08);
+}
+
+#error{
+margin-top:15px;
+color:red;
+font-size:1rem;
+}
+
+/* HEART BLAST */
+
+.heart{
+position:fixed;
+font-size:30px;
+animation:blast 1s linear forwards;
+pointer-events:none;
+z-index:999;
+}
+
+@keyframes blast{
+0%{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+100%{
+opacity:0;
+transform:translateY(-200px) scale(2);
+}
+}
+
+/* MAIN */
+
+#main{
+display:none;
+min-height:100vh;
+background:linear-gradient(135deg,#ff4f8b,#ff99c8,#ffd6e8);
+padding:30px;
+text-align:center;
+overflow:hidden;
+position:relative;
+}
+
+/* FLOAT HEARTS */
+
+.hearts span{
+position:fixed;
+bottom:-50px;
+font-size:30px;
+animation:float 8s linear infinite;
+z-index:0;
+}
+
+@keyframes float{
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(-120vh) rotate(360deg);
+opacity:0;
+}
+}
+
+/* BALLOONS */
+
+.balloon{
+position:fixed;
+bottom:-150px;
+width:70px;
+height:90px;
+background:pink;
+border-radius:50%;
+animation:balloon 12s linear infinite;
+opacity:0.7;
+}
+
+.balloon::after{
+content:'';
+position:absolute;
+width:2px;
+height:80px;
+background:white;
+left:50%;
+top:90px;
+}
+
+@keyframes balloon{
+0%{
+transform:translateY(0);
+}
+100%{
+transform:translateY(-140vh);
+}
+}
+
+/* TITLE */
+
+.main-title{
+font-size:5rem;
+font-family:'Great Vibes',cursive;
+margin-top:20px;
+animation:glow 2s infinite alternate;
+}
+
+.name{
+font-size:2.5rem;
+margin-top:10px;
+font-family:'Great Vibes',cursive;
+color:white;
+}
+
+.quote{
+margin-top:20px;
+font-size:1.3rem;
+max-width:900px;
+margin-left:auto;
+margin-right:auto;
+font-style:italic;
+}
+
+@keyframes glow{
+from{
+text-shadow:0 0 10px white;
+}
+to{
+text-shadow:0 0 30px #ff2f72;
+}
+}
+
+/* COUNTDOWN */
+
+.countdown{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:50px;
+}
+
+.time-box{
+background:rgba(255,255,255,0.2);
+padding:25px;
+border-radius:20px;
+min-width:120px;
+}
+
+.time-box h2{
+font-size:2.5rem;
+}
+
+/* GALLERY */
+
+.gallery{
+margin-top:60px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.gallery img{
+width:100%;
+height:260px;
+object-fit:cover;
+border-radius:25px;
+border:5px solid white;
+transition:0.4s;
+box-shadow:0 0 25px rgba(255,255,255,0.5);
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+/* MEMORIES */
+
+.timeline{
+margin-top:80px;
+}
+
+.memory{
+background:rgba(255,255,255,0.2);
+margin:20px auto;
+width:80%;
+padding:20px;
+border-radius:20px;
+font-size:1.2rem;
+}
+
+/* FINAL SURPRISE */
+
+.gift-box{
+margin-top:80px;
+}
+
+.gift{
+display:inline-block;
+background:white;
+color:#ff2f72;
+padding:25px 40px;
+border-radius:25px;
+font-size:1.5rem;
+font-weight:bold;
+cursor:pointer;
+transition:0.4s;
+}
+
+.gift:hover{
+transform:scale(1.08);
+}
+
+#giftSection{
+display:none;
+margin-top:30px;
+}
+
+#giftSection input{
+padding:15px;
+border:none;
+border-radius:15px;
+outline:none;
+width:300px;
+max-width:90%;
+text-align:center;
+}
+
+#giftSection button{
+margin-top:20px;
+padding:15px 30px;
+border:none;
+border-radius:15px;
+background:#ff2f72;
+color:white;
+cursor:pointer;
+}
+
+#finalMessage{
+display:none;
+margin-top:30px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HACK SCREEN -->
+
+<div id="hackScreen">
+
+<h1>⚠ SYSTEM HACKED ⚠</h1>
+
+<p>ACCESSING SECRET LOVE FILES...</p>
+
+</div>
+
+<!-- QUIZ -->
+
+<div id="quizSection">
+
+<div class="quiz-box">
+
+<h1 id="question">Loading...</h1>
+
+<input type="text" id="answer" placeholder="Type Your Answer">
+
+<button onclick="checkAnswer()">Next</button>
+
+<p id="error"></p>
+
+</div>
+
+</div>
+
+<!-- MAIN WEBSITE -->
+
+<div id="main">
+
+<div class="hearts">
+<span style="left:10%;animation-delay:0s;">💖</span>
+<span style="left:25%;animation-delay:2s;">💘</span>
+<span style="left:45%;animation-delay:4s;">💕</span>
+<span style="left:65%;animation-delay:1s;">💗</span>
+<span style="left:85%;animation-delay:3s;">💝</span>
+</div>
+
+<div class="balloon" style="left:10%;animation-delay:0s;"></div>
+<div class="balloon" style="left:30%;animation-delay:2s;"></div>
+<div class="balloon" style="left:50%;animation-delay:4s;"></div>
+<div class="balloon" style="left:70%;animation-delay:1s;"></div>
+<div class="balloon" style="left:90%;animation-delay:3s;"></div>
+
+<h1 class="main-title">Happy Birthday</h1>
+
+<h2 class="name">R.S.Sivani sree</h2>
+
+<p class="quote">
+"Unna love pannathu enaku oru feeling mattum illa adhu oru life enaku"
+</p>
+
+<audio controls autoplay loop style="margin-top:30px;">
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="gallery">
+
+<img src="pic10.jpg.jpeg">
+<img src="pic12.jpg.jpeg">
+<img src="pic2.jpg.jpeg">
+<img src="pic3.jpg.jpeg">
+<img src="pic4.jpg.jpeg">
+<img src="pic8.jpg.jpeg">
+
+</div>
+
+<div class="timeline">
+
+<h1 style="font-family:'Great Vibes',cursive;font-size:3rem;">
+Our Memories 💌
+</h1>
+
+<div class="memory">
+✨ 21.04.2025 — Our First Meet Up
+</div>
+
+<div class="memory">
+💙 Favorite Color — Blue
+</div>
+
+<div class="memory">
+🏍 Favorite Moment — Bike la ponathu
+</div>
+
+<div class="memory">
+👶 Favorite Baby — Girl Baby
+</div>
+
+<div class="memory">
+🥞 Favorite Food — Dosa
+</div>
+
+</div>
+
+<div class="gift-box">
+
+<h1 style="font-family:'Great Vibes',cursive;font-size:3rem;">
+🎁 Final Surprise 🎁
+</h1>
+
+<div class="gift" onclick="showPasswordBox()">
+Open Final Surprise
+</div>
+
+<div id="giftSection">
+
+<input type="password" id="giftPassword" placeholder="Enter Final Password">
+
+<br>
+
+<button onclick="openGift()">
+Unlock
+</button>
+
+</div>
+
+<div id="finalMessage"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+q:"1. Namma first meet up epa?",
+a:"21.04.2025"
+},
+
+{
+q:"2. Ennoda favorite colour enna?",
+a:"blue"
+},
+
+{
+q:"3. Favorite moment?",
+a:"bike la ponathu"
+},
+
+{
+q:"4. Ennoda favorite baby?",
+a:"girl baby"
+},
+
+{
+q:"5. Ennoda fav food enna?",
+a:"dosa"
+}
+
+];
+
+let currentQuestion = 0;
+
+document.getElementById("question").innerHTML =
+questions[currentQuestion].q;
+
+function checkAnswer(){
+
+let userAnswer =
+document.getElementById("answer")
+.value.toLowerCase().trim();
+
+if(userAnswer === questions[currentQuestion].a.toLowerCase()){
+
+heartBlast();
+
+currentQuestion++;
+
+document.getElementById("answer").value="";
+document.getElementById("error").innerHTML="";
+
+if(currentQuestion < questions.length){
+
+document.getElementById("question").innerHTML =
+questions[currentQuestion].q;
+
+}
+else{
+
+document.getElementById("quizSection").style.display="none";
+
+document.getElementById("main").style.display="block";
+
+}
+
+}
+else{
+
+document.getElementById("error").innerHTML =
+"❌ Wrong Answer";
+
+}
+
+}
+
+/* HEART BLAST */
+
+function heartBlast(){
+
+for(let i=0;i<20;i++){
+
+let heart=document.createElement("div");
+
+heart.innerHTML="💖";
+
+heart.classList.add("heart");
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.top=Math.random()*100+"vh";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},1000);
+
+}
+
+}
+
+/* FINAL PASSWORD */
+
+function showPasswordBox(){
+
+document.getElementById("giftSection")
+.style.display="block";
+
+}
+
+function openGift(){
+
+let pass =
+document.getElementById("giftPassword")
+.value;
+
+if(pass==="28.05.2008"){
+
+document.getElementById("finalMessage")
+.style.display="block";
+
+document.getElementById("finalMessage").innerHTML = `
+
+<div style="
+background:rgba(255,255,255,0.15);
+padding:35px;
+border-radius:30px;
+max-width:1000px;
+margin:auto;
+line-height:2;
+font-size:1.2rem;
+backdrop-filter:blur(10px);
+box-shadow:0 0 30px rgba(255,255,255,0.3);
+">
+
+<h1 style="
+font-family:'Great Vibes',cursive;
+font-size:4rem;
+margin-bottom:25px;
+">
+💖 Happy Birthday Shivani 💖
+</h1>
+
+<p style= "color: black">
+
+Happy Birthday da en Kuttymahh 🎂🎉🩷✨
+
+Indha naal enaku romba special 🥺💫 yenna… indha ulagathula enaku romba mukkiyamana oru ponnu porandha naal idhu 🩷🌍
+
+Honestly… nee en life la vandhadhuku apram dhaan happiness na enna nu purinjiduchu 😊🩷
+
+Un sirippu 😄 un voice 🎧 un kovam 😤 un care 🫂 un love 🩷 ellame enaku daily addiction maari aayiduchu 🥺💞
+
+Nee happy ah irundha dhan enaku sandhosham 😊🩷 nee sad ah irundha enaku kastam 😞💔
+
+Unaku theriyuma… 🥺 daily night thoonguradhuku munnadiyum 🌙 morning ezhundha odaneyum ☀️ en mind la first varradhu nee dhan 🩷💭
+
+Namma sanda potta moments 😤 siricha moments 😂 late night calls 📞 video calls 📱🎥 “saptiya?” nu ketta care 🍽️🩷 “miss pannuren” nu sonna feel 🥺💞 ellame enaku priceless memories 💎🩷
+
+Nee enaku just lover illa… 🩷 nee en best friend 👭 nee en comfort 🫂 nee en peace ☮️ nee en happiness 😊 nee en life 💯🌍
+
+Innum oru visayam sollanum… 🥺🩷
+
+Naa un birthday ku unna surprise panna neraya plans pannirundhen 🎁✨ first la semma excitement oda ella prepare panniten 🥺💫
+
+aana apram nee unga v2 la maatikitta… 😞💔 adhuku apram unna treat panra situation eh vera maari poiduchu… 🥺
+
+adhunaala naan ella plans um cancel panniten 😔💔
+
+aana nee munthanethu sonna odane… 🥺🩷 naan thirupi ella plans um panna aarambichen ✨🎂
+
+nee happy aaganum nu dhaan enaku aasai 🩷
+
+aana apram un friends ellarum vara mudiyadhu nu sonnaanga… 😞 adhoda thirupi ellame poiduchu 🥺💔
+
+seriously romba sorry mahh 😔🫂 unaku naan nenacha maari surprise kuduka mudiyala… 😞🎁
+
+ennala oru proper gift kooda kuduka mudiyala… 🥺💔 adhukum sorry da mahh 😞🩷
+
+aana onnu mattum nambuu… 🥺💯 gift vida en love un mela adhigam 🩷
+
+vdu paathukalam mahh… 💫 nee birthday va happy ah celebrate pannu 🎂😊🩷 sirichite iru 😄🌸
+
+seekiram naa unna paaka varuven 🫂🩵 appo neraya hugs 🤗 neraya pesanum 🥺💬 neraya memories create pannanum 📸🩷
+
+Sometimes naan yosipen… 🤔💭 “nee en life la varala na enna aagirukum?” nu… seriously bayama irukum 😞💔
+
+Yenna… ippo nee illa na en life incomplete maari feel aagudhu 🥺🩷
+
+Un birthday la naan kekura oru wish dhaan 🤞✨ nee eppovume happy ah irukanum 😊🩷 nee sirichite irukanum 😄🌸 yendha kastam vandhalum naan un kooda irupen 🫂🩵
+
+Nee achieve panna pora ovvoru dream um naan pakkanum 🥺✨ un success la naan claps adikanum 👏🩷 un tears varaama paathukanum 😭🫶🏻
+
+Inime neraya birthdays 🎂 neraya memories 📸 neraya hugs 🫂 neraya love 🩷 ellam un kooda dhaan create pannanum 🥺💫
+
+Last ah oru visayam… 🥺🩷
+
+“Unna love pannradhu enaku oru feeling illa… adhu enaku oru life 🩷”
+
+Happy Birthday once again da Shivani 🎂🎉🩷 Love you more than anything 😘🫂💌✨
+
+Once again happiest Birthday Milky Bar 🤭🫂🩷🪄💋
+
+
+</p>
+
+</div>
+
+`;
+
+}
+else{
+
+alert("Wrong Password ❌");
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
